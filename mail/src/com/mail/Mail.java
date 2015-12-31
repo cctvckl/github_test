@@ -41,7 +41,7 @@ public class Mail {
 }
 
 class PopupAuthenticator extends Authenticator {
-	public static final String mailuser = "914000408";
+	public static final String mailuser = "9140008";
 	public static final String password = "vgjzjfucsieebceb";
 
 	public PasswordAuthentication getPasswordAuthentication() {
