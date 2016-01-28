@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<project name="starCenter" default="dist" basedir=".">
+    <description>backstage_op project.</description>
+    <!-- set global properties for this build -->
+    <property name="jarname" value="backstage_op" />
+    <property name="bin" value="classes" />
+    <property name="lib" value="../backstage_deploy/release/common/lib/" />
+    <property name="common.conf" value="../backstage_deploy/release/common/conf/" />
+    <property name="conf" value="../backstage_deploy/release/backstage_op/conf" />
+    <property name="build" value="build" />
+    <property name="testReport" value="testReport" />
+    <path id="classpath">
+        <fileset dir="${lib}">
+            <include name="**/*.jar" />
+			 <exclude name="${jarname}.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init">
+        <!-- Create the build directory structure used by compile -->
+       <mkdir dir="${bin}" />
+		<mkdir dir="${build}" />
+        <delete includeemptydirs="true">
+            <fileset dir="${bin}" includes="**/*" />
+        </delete>
+	
+    </target>
+    <target name="compile" depends="init" description="compile the source">
+        <!-- Compile the java code from ${src} into ${bin} -->
+        <javac encoding="UTF-8" srcdir="." destdir="${bin}" includeantruntime="false" debug="on">
+            <include name="**/*" />
+            <!--<exclude name="**/*Test.*" />-->
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+
+    <!-- 测试 -->
+    <target name="test" depends="compile" description="run junit test">
+        <mkdir dir="${testReport}" />
+        <junit printsummary="on" haltonfailure="false" failureproperty="tests.failed" showoutput="true">
+            <classpath>
+                <pathelement location="${conf}" />
+                <pathelement location="${common.conf}" />
+                <pathelement location="${bin}" />
+
+                <fileset dir="${lib}">
+                    <include name="**/*.jar" />
+                </fileset>
+            </classpath>
+            <formatter type="xml" />
+            <batchtest todir="${testReport}">
+                <fileset dir="${bin}">
+                  <include name="**/test/AllTests.*" />
+                </fileset>
+            </batchtest>
+        </junit>
+        <fail if="tests.failed">
+        </fail>
+    </target>
+
+    <target name="dist" depends="compile" description="generate the distribution">
+        <!-- Create the distribution directory -->
+        <mkdir dir="${build}" />
+        <delete file="${build}/${jarname}.jar" />
+        <delete defaultexcludes="false">
+            <fileset dir="${bin}" includes="**/.svn" />
+        </delete>
+        <jar jarfile="${build}/${jarname}.jar" basedir="${bin}" includes="**/*.class" excludes="**/test/*" />
+    </target>
+
+    <target name="clean" description="clean up">
+        <!-- Delete   the ${build} and ${dist} directory trees -->
+        <delete defaultexcludes="false" includeemptydirs="true">
+            <fileset dir="${bin}" includes="**/*" />
+            <fileset dir="${build}" includes="${jarname}.jar" />
+			 <fileset dir="logs" includes="**/*" />
+        </delete>
+    </target>
+</project>

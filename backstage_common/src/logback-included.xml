@@ -1,0 +1,234 @@
+<included>
+    <!-- 获得当前程序所属服务器的ip -->
+    <define name="LOCAL_SAMPLE_IP" class="com.xunlei.logback.property.LocalSampleIp" />
+    <!-- 获得当前程序的标识符 -->
+    <define name="RUNTIME_APP_NAME" class="com.xunlei.logback.property.RuntimeAppName" />
+    <property name="NORMAL_PATTERN" value="%d{HH:mm:ss}|%40.40(%c{30}.%-5M)|%-5.5p %m \\(%file:%line\\) %-5(%thread) %n%xEx" />
+    <property name="ALARM_PATTERN" value="%d{HH:mm:ss}|%m%n%-5(%thread) %n" />
+    <property name="STAT_NORMAL_PATTERN" value="%d{HH:mm:ss}|%m%n" />
+
+    <!-- 默认邮件报警配置 -->
+    <appender name="alarm" class="ch.qos.logback.classic.net.SMTPAppender">
+        <SMTPHost>mail.cc.sandai.net</SMTPHost>
+        <Username>monitor@cc.sandai.net</Username>
+        <Password>121212</Password>
+        <From>monitor@cc.sandai.net</From>
+        <To>javasvralarm&lt;javasvralarm@xunlei.com&gt;</To>
+
+        <!-- <Subject>[${LOCAL_SAMPLE_IP}-${RUNTIME_APP_NAME}]%c{30}</Subject> -->
+        <Subject>${RUNTIME_APP_NAME}%X{mailTitle}</Subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${ALARM_PATTERN}</pattern>
+        </layout>
+        <evaluator class="com.xunlei.logback.XLSmtpSimpleEvaluator">
+            <name>MONITOR_DEFAULT</name>
+            <eventNumLimit>1</eventNumLimit>
+            <eventSecondLimit>1</eventSecondLimit>
+        </evaluator>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <!-- <Discriminator class="ch.qos.logback.core.sift.DefaultDiscriminator"></Discriminator> -->
+    </appender>
+    <appender name="alarm_dos" class="ch.qos.logback.classic.net.SMTPAppender">
+        <SMTPHost>mail.cc.sandai.net</SMTPHost>
+        <Username>monitor@cc.sandai.net</Username>
+        <Password>121212</Password>
+        <From>monitor@cc.sandai.net</From>
+        <To>javasvralarm@xunlei.com</To>
+
+        <Subject>${RUNTIME_APP_NAME}%X{mailTitle}</Subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${ALARM_PATTERN}</pattern>
+        </layout>
+        <evaluator class="com.xunlei.logback.XLSmtpSimpleEvaluator">
+            <name>MONITOR_DOS</name>
+            <eventNumLimit>256</eventNumLimit>
+            <eventSecondLimit>600</eventSecondLimit>
+        </evaluator>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <!-- 电影院特殊位置邮件通知机制 -->
+    <appender name="cinemaNotice" class="ch.qos.logback.classic.net.SMTPAppender">
+        <SMTPHost>mail.cc.sandai.net</SMTPHost>
+        <Username>monitor@cc.sandai.net</Username>
+        <Password>121212</Password>
+        <From>monitor@cc.sandai.net</From>
+        <To>javasvralarm&lt;javasvralarm@xunlei.com&gt;</To>
+
+        <!-- <Subject>[${LOCAL_SAMPLE_IP}-${RUNTIME_APP_NAME}]%c{30}</Subject> -->
+        <Subject>${RUNTIME_APP_NAME}%X{mailTitle}</Subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${ALARM_PATTERN}</pattern>
+        </layout>
+        <evaluator class="com.xunlei.logback.XLSmtpSimpleEvaluator">
+            <name>MONITOR_DEFAULT</name>
+            <eventNumLimit>1</eventNumLimit>
+            <eventSecondLimit>1</eventSecondLimit>
+        </evaluator>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <appender name="cinemaAlarm" class="ch.qos.logback.classic.net.SMTPAppender">
+        <SMTPHost>mail.cc.sandai.net</SMTPHost>
+        <Username>monitor@cc.sandai.net</Username>
+        <Password>121212</Password>
+        <From>monitor@cc.sandai.net</From>
+        <To>javasvralarm&lt;javasvralarm@xunlei.com&gt;</To>
+
+        <!-- <Subject>[${LOCAL_SAMPLE_IP}-${RUNTIME_APP_NAME}]%c{30}</Subject> -->
+        <Subject>${RUNTIME_APP_NAME}%X{mailTitle}</Subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${ALARM_PATTERN}</pattern>
+        </layout>
+        <evaluator class="com.xunlei.logback.XLSmtpSimpleEvaluator">
+            <name>MONITOR_DEFAULT</name>
+            <eventNumLimit>1</eventNumLimit>
+            <eventSecondLimit>1</eventSecondLimit>
+        </evaluator>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <appender name="cinemaReport" class="ch.qos.logback.classic.net.SMTPAppender">
+        <SMTPHost>mail.cc.sandai.net</SMTPHost>
+        <Username>monitor@cc.sandai.net</Username>
+        <Password>121212</Password>
+        <From>monitor@cc.sandai.net</From>
+        <To>javasvralarm&lt;javasvralarm@xunlei.com&gt;</To>
+
+        <!-- <Subject>[${LOCAL_SAMPLE_IP}-${RUNTIME_APP_NAME}]%c{30}</Subject> -->
+        <Subject>Fw:${RUNTIME_APP_NAME}%X{mailTitle}</Subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${ALARM_PATTERN}</pattern>
+        </layout>
+        <evaluator class="com.xunlei.logback.XLSmtpSimpleEvaluator">
+            <name>MONITOR_DEFAULT</name>
+            <eventNumLimit>1</eventNumLimit>
+            <eventSecondLimit>1</eventSecondLimit>
+        </evaluator>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <appender name="cinemaReportGeneral" class="ch.qos.logback.classic.net.SMTPAppender">
+        <SMTPHost>mail.cc.sandai.net</SMTPHost>
+        <Username>monitor@cc.sandai.net</Username>
+        <Password>121212</Password>
+        <From>monitor@cc.sandai.net</From>
+        <To>javasvralarm&lt;javasvralarm@xunlei.com&gt;</To>
+
+        <!-- <Subject>[${LOCAL_SAMPLE_IP}-${RUNTIME_APP_NAME}]%c{30}</Subject> -->
+        <Subject>${RUNTIME_APP_NAME}%X{mailTitle}</Subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${ALARM_PATTERN}</pattern>
+        </layout>
+        <evaluator class="com.xunlei.logback.XLSmtpSimpleEvaluator">
+            <name>MONITOR_DEFAULT</name>
+            <eventNumLimit>1</eventNumLimit>
+            <eventSecondLimit>1</eventSecondLimit>
+        </evaluator>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <logger name="notice.com.xunlei.cinema.util.Notifier" level="OFF">
+        <appender-ref ref="cinemaNotice" />
+    </logger>
+    <logger name="alarm.com.xunlei.cinema.util.Notifier" level="OFF">
+        <appender-ref ref="cinemaAlarm" />
+    </logger>
+    <logger name="report.com.xunlei.cinema.util.Notifier" level="OFF">
+        <appender-ref ref="cinemaReport" />
+    </logger>
+    <logger name="reportGeneral.com.xunlei.cinema.util.Notifier" additivity="false" level="OFF">
+        <appender-ref ref="cinemaReportGeneral" />
+    </logger>
+
+    <!-- HttpServer监控报警 -->
+    <logger name="com.xunlei.netty.httpserver.handler.TextResponseHandler" level="OFF">
+        <appender-ref ref="alarm" />
+    </logger>
+    <!-- 系统监控报警 -->
+    <logger name="com.xunlei.util.SystemMonitor" level="OFF">
+        <appender-ref ref="alarm_dos" />
+    </logger>
+
+    <appender name="fix_size_mem" class="com.xunlei.logback.FixSizeMemAppender">
+        <size>100</size>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${NORMAL_PATTERN}</pattern>
+        </layout>
+    </appender>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+            <pattern>${NORMAL_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!--如果想设置每小时或每分钟一个日志，请在logback-spec.xml上来覆盖配置 -->
+    <!--logback-include.xml的原因是业务不相关的默认配置 -->
+    <appender name="rolling_file" class="ch.qos.logback.core.rolling.AsyncRollingFileAppender">
+        <append>true</append>
+        <file>logs/logFile.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/logFile.%d{yyyy-MM-dd.HH}-%i.log.gz</fileNamePattern>
+            <maxHistory>720</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${NORMAL_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ruiz监控stat日志记录 -->
+    <logger name="timespanStat.com.xunlei.netty.httpserver.util.TimeSpanStatHelper" level="DEBUG" additivity="false">
+        <appender name="timespanStat" class="ch.qos.logback.core.rolling.AsyncRollingFileAppender">
+            <append>true</append>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>logs/ruizStat/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>${STAT_NORMAL_PATTERN}</pattern>
+            </encoder>
+        </appender>
+    </logger>
+
+    <!--以下为一般不用显示的日志 -->
+    <logger name="net.sf.ehcache" level="INFO" />
+    <logger name="httpclient.wire" level="INFO" />
+    <logger name="net.rubyeye.xmemcached" level="WARN" />
+    <logger name="com.google.code.yanf4j" level="WARN" />
+
+    <logger name="org.quartz" level="WARN" />
+    <logger name="org.springframework" level="INFO" />
+    <logger name="org.springmodules" level="INFO" />
+
+    <logger name="org.apache.velocity" level="INFO" />
+    <logger name="org.apache.mina" level="INFO" />
+    <logger name="org.apache.http" level="INFO" />
+    <logger name="org.apache.commons.beanutils" level="WARN" />
+    <logger name="org.apache.commons.httpclient" level="INFO" />
+    <logger name="com.xunlei.proxy.SimpleHttpClient" level="WARN" />
+
+    <logger name="com.mchange" level="WARN" />
+    <logger name="com.xunlei.jdbc.typematcher" level="OFF" />
+    <logger name="com.xunlei.jdbc" level="DEBUG" />
+
+    <logger name="com.xunlei.memcached" level="INFO" />
+    <logger name="com.xunlei.netty.httpserver.component" level="INFO" />
+    <logger name="com.xunlei.netty.httpserver.async.AsyncProxyHandler" level="OFF" />
+</included>

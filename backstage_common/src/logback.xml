@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+    <include resource="logback-included.xml" />
+    <include resource="logback-spec.xml" />
+    <logger name="com.xunlei.jdbc" level="INFO" />
+
+    <root level="error">
+        <appender-ref ref="fix_size_mem" />
+        <appender-ref ref="stdout" />
+    </root>
+</configuration>

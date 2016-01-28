@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="true" scanPeriod="30 seconds">
+    <include resource="logback-included.xml" />
+    <include resource="logback-spec.xml" />
+
+    <appender name="fix_name_mem" class="com.xunlei.logback.FixNameMemAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${NORMAL_PATTERN}</pattern>
+        </layout>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="fix_name_mem" />
+        <appender-ref ref="fix_size_mem" />
+        <appender-ref ref="stdout" />
+        <!-- <appender-ref ref="alarm" /> -->
+        <!-- <appender-ref ref="rolling_file" /> -->
+    </root>
+</configuration>

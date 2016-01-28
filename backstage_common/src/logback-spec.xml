@@ -1,0 +1,15 @@
+<included>
+	<logger name="stat.com.xunlei.cinema.shop.cmd.TicketsCmd.ticket" level="ERROR" additivity="false">
+        <appender name="ticket" class="ch.qos.logback.core.rolling.AsyncRollingFileAppender">
+            <append>true</append>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>logs/ticket/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>60</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>${STAT_NORMAL_PATTERN}</pattern>
+            </encoder>
+        </appender>
+    </logger>
+
+</included>
